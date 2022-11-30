@@ -1,0 +1,178 @@
+<html>
+    <head>
+      <!-- <script scr="../script/token.js"></script>
+      <script>
+        window.onload = token();
+      </script> -->
+        <link rel="stylesheet" href="css/style.css">
+
+        <title>Søg efter discs</title>
+        <style>
+          th, td, p, input {
+              font:14px Verdana;
+          }
+          table, th, td 
+          {
+              border: solid 1px #AAA;
+              border-collapse: collapse;
+              padding: 3px 4px;
+              text-align: left;
+              background-color: whitesmoke;
+          }
+          th {
+              font-weight:bold;
+          }
+
+          table {
+            margin-left: auto;
+            margin-right: auto;
+          }
+      </style>
+    </head>
+    <body onload="makeTable()">
+      <div id="header">
+        <a href="index.html"><img src="img/cropped-cropped-asd_Tegnebraet-1-1536x278.png"></a>
+      </div>
+      <div id="navbar"> 
+        <ul> 
+        <li><a href="index.html">Forside</a></li> 
+        <li><a href="insert.html">Indsæt data</a></li> 
+        <li><a href="list.html">Se alle discs</a></li> 
+        <li><a href="search.html">Søg i discs</a></li> 
+        <li><a href="butik.html">Butik</a></li> 
+        <li><a href="taske.html">Taske</a></li> 
+        </ul> 
+        </div> 
+
+        <p id="showData"></p>
+
+    </body>
+    <script>
+
+    // window.onload = function() {
+    //         test();
+    //     };
+      async function fetchData() {
+        try {
+            const response = await fetch('http://localhost:3000/api/mydiscs/look', {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function fetchSingleData(id){
+      try {
+        const response = await fetch('http://localhost:3000/api/mydiscs/' + id, {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+            return data;
+      } catch (error){
+        console.error(error);
+      }
+    }
+
+    async function makeTable(){  
+
+          const data = await fetchData();
+          // EXTRACT VALUE FOR HTML HEADER. 
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        var col = ['Manufacturer', 'Disc Name','Description', 'Type', 'Speed', 'Glide', 'Turn', 'Fade'];
+        // var col = []
+        // for (var i = 0; i < data.length; i++) {
+        //     for (var key in data[i]) {
+        //         if (col.indexOf(key) === -1) {
+        //             if (key.includes("_id"))
+        //             {
+
+        //             }
+        //             else
+        //             {
+        //               col.push("Description")
+        //               col.push("Disc Name")
+        //               col.push("Manufacturer")
+        //               col.push("Speed")
+        //               col.push("Glide")
+        //               col.push("Turn")
+        //               col.push("Fade")
+        //               break
+        //             }
+        //         }
+        //     }
+        // }
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < data.length; i++) {
+            tr = table.insertRow(-1);
+            var tabCell1 = tr.insertCell(-1);
+            tabCell1.innerHTML = data[i].orders_info.Manufacturer;
+            var tabCell2 = tr.insertCell(-1);
+            tabCell2.innerHTML = data[i].orders_info.Disc_Name;
+            var tabCell3 = tr.insertCell(-1);
+            tabCell3.innerHTML = data[i].Description;
+            var tabCell4 = tr.insertCell(-1);
+            tabCell4.innerHTML = data[i].orders_info.Type;
+            var tabCell5 = tr.insertCell(-1);
+            tabCell5.innerHTML = data[i].orders_info.Speed;
+            var tabCell6 = tr.insertCell(-1);
+            tabCell6.innerHTML = data[i].orders_info.Glide;
+            var tabCell7 = tr.insertCell(-1);
+            tabCell7.innerHTML = data[i].orders_info.Turn;
+            var tabCell8 = tr.insertCell(-1);
+            tabCell8.innerHTML = data[i].orders_info.Fade;
+            
+            
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+          }
+
+    function test(){
+      let url = "http://localhost:3000/api/user/welcome";
+
+      var token;
+      if (localStorage.token) {
+      token = localStorage.token;
+      } 
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", url);
+
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+              console.log(xhr.responseText);
+          }};
+
+      let data = `{
+          "token": "${token}"
+      }`;
+      console.log(data)
+      xhr.send(data);
+    }
+    </script>
+</html>

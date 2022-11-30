@@ -1,0 +1,245 @@
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+body {
+  background-color: rgb(232, 232, 232);
+  font-family: Verdana;
+  text-transform: uppercase;
+}
+
+h1 {
+  color: navy;
+  margin-left: 20px;
+}
+
+.inputBox {
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    position: relative;
+    width: 25%;
+    padding-bottom: 2%;
+    justify-content: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: rgb(248, 248, 248);
+    border-radius: 5px;
+    border: solid 1.5px #D3D3D3;
+        
+}
+
+.inputBox input {
+    width: 90%;
+    margin-left: 5%;
+}
+
+.inputBox select {
+  width: 90%;
+  margin-left: 5%;
+}
+
+.inputBox h4 {
+    text-align: center;
+    font-family: 'Spartan';
+    font-size: 14px;
+}
+
+.inputBox button {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#postD {
+  margin-top: 8%;
+    margin-left: 40%;
+    
+}
+
+::placeholder{
+  color: grey;
+}
+
+/* with the :focus here, we would show grey when not using the element */
+
+select:invalid{
+  color: gray;
+}
+
+option{
+    color: black;
+}
+
+#navbar {
+  width: 99.8%;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.26);
+  border-style: solid;
+  font-family: 'Source Sans Pro',sans-serif;
+  text-transform: uppercase;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  border-radius: 5px;
+  border: solid 1.5px #D3D3D3;  
+}
+
+#navbar ul { 
+  margin: 0; 
+  padding: 5px; 
+  list-style-type: none; 
+  text-align: center; 
+  background-color: whitesmoke;
+  } 
+ 
+#navbar ul li {  
+  display: inline; 
+  } 
+ 
+#navbar ul li a { 
+  text-decoration: none; 
+  padding: .2em 1em; 
+  color: #333; 
+  background-color: whitesmoke; 
+  font-size: 14px;
+  /* #cc181c */
+  
+  } 
+ 
+#navbar ul li a:hover { 
+  color: #000; 
+  background-color: white;
+  transition:500ms;
+  border-radius: 5px;
+  } 
+
+  #header {
+    margin-left: -5%;
+    width: 110%;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    min-height: 5em;
+  }
+
+  #header img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5%;
+    max-width: 20%;
+  }
+
+  .searchBox {
+    margin-left:auto;
+    margin-right: auto;
+    position: flex;
+    width: 95%;
+    border: 0.1px solid black;
+    padding: 10px;
+    background-color: rgb(248, 248, 248);
+
+}
+
+.searchBox input {
+    width: 13%;
+}
+
+.searchBox select {
+  width: 13%  ;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-width: 1px;
+  border-style: inset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+}
+
+.searchBox h4 {
+    text-align: center;
+    font-family: 'Spartan';
+    font-size: 17px;
+}
+
+.searchBox button {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#h2div {
+  text-align: center;
+}
+
+#index_h1 {
+  text-align: center;
+}
+
+#login_form {
+text-align: center;
+height: 18em;
+width: 30em;
+margin-left: auto;
+margin-right: auto;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+background-color: rgb(248, 248, 248);
+padding-top: 1em;
+border-radius: 5px;
+border: solid 1.5px #D3D3D3;
+}
+
+#username, #password {
+  margin-top:1em ;
+  width: 23em;
+  height: 2.5em;
+  border-radius: 5px;
+  border: solid 1.5px #D3D3D3;
+  transition: 1s;
+  font-family: 'Source Sans Pro',sans-serif;
+}
+
+#username:hover, #password:hover {
+  box-shadow: 0 0 5pt 0.5pt #D3D3D3;
+}
+
+#username:focus, #password:hover {
+  box-shadow: 0 0 5pt 2pt #D3D3D3;
+  outline-width: 0px;
+}
+
+
+
+/* CSS */
+#login_button {
+  background-color: rgb(232, 232, 232);
+  border-radius: 5px;
+  width: 12em;
+  border: solid 1.5px #D3D3D3;
+  transition: 1s;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  font-family: 'Source Sans Pro',sans-serif;
+  margin-top: 2.5em;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#login_button:hover {
+  transition: 500ms;
+  box-shadow: 0 0 5pt 0.5pt #D3D3D3;
+}
+
+#data_table {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

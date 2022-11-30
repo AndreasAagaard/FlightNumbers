@@ -1,0 +1,259 @@
+<html>
+    <head>
+        <!-- <script scr="../script/token.js"></script>
+        <script>
+          window.onload = token();
+        </script> -->
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Søg efter discs</title>
+        <style>
+            th, td, p, input {
+                font:14px Verdana;
+            }
+            table, th, td 
+            {
+                border: solid 1px #AAA;
+                border-collapse: collapse;
+                padding: 2px 3px;
+                text-align: center;
+                background-color: whitesmoke;
+            }
+            th {
+                font-weight:bold;
+            }
+
+            table {
+              margin-left: auto;
+              margin-right: auto;
+            }
+        </style>
+    </head>
+    <body>
+      <div id="header">
+        <a href="index.html"><img src="img/cropped-cropped-asd_Tegnebraet-1-1536x278.png"></a>
+    </div>
+      <div id="navbar"> 
+        <ul> 
+        <li><a href="index.html">Forside</a></li> 
+        <li><a href="insert.html">Indsæt data</a></li> 
+        <li><a href="list.html">Se alle discs</a></li> 
+        <li><a href="search.html">Søg i discs</a></li> 
+        <li><a href="butik.html">Butik</a></li> 
+        <li><a href="taske.html">Taske</a></li> 
+        </ul> 
+        </div> 
+        <div id="h2div">
+            <h2>Indtast søgeparameter</h2>
+        </div>
+        <div class="searchBox">
+        <select id="manu" name="manufacturers" required>
+            <option id="disabled" value="" disabled selected >Vælg Manufacturer</option> 
+            <option value="Axiom Discs">Axiom</option>
+            <option value="ABC Discs">ABC Discs</option>
+            <option value="Above Ground Level">Above Ground Level</option>
+            <option value="Aerobie">Aerobie</option>
+            <option value="AquaFlight Discs">AquaFlight Discs</option>
+            <option value="Arsenal Discs">Arsenal Discs</option>
+            <option value="Black Zombie Disc Golf">Black Zombie Disc Golf</option>
+            <option value="Crosslap Discgolf Parks">Crosslap Discgolf Parks</option>
+            <option value="Daredevil Discs">Daredevil Discs</option>
+            <option value="Disc Golf Association">Disc Golf Association</option>
+            <option value="Disc King">Disc King</option>
+            <option value="Discmania">Discmania</option>
+            <option value="Discraft">Discraft</option>
+            <option value="Dynamic Discs">Dynamic Discs</option>
+            <option value="Element Discs">Element Discs</option>
+            <option value="Fly High Discs">Fly High Discs</option>
+            <option value="Full Turn Discs">Full Turn Discs</option>
+            <option value="Galaxy Disc Golf">Galaxy Disc Golf</option>
+            <option value="Gateway Disc Sports">Gateway Disc Sports</option>
+            <option value="Guru Disc Golf">Guru Disc Golf</option>
+            <option value="Infinite Discs">Infinite Discs</option>
+            <option value="Innova-Champion Discs">Innova</option>
+            <option value="Kastaplast">Kastaplast</option>
+            <option value="Kestrel Outdoors">Kestrel Outdoors</option>
+            <option value="Hyzer Bomb">Hyzer Bomb</option>
+            <option value="Latitude 64">Latitude 64</option>
+            <option value="Legacy Discs">Legacy Discs</option>
+            <option value="Lightning Discs">Lightning Discs</option>
+            <option value="Løft Discs">Løft Discs</option>
+            <option value="Millennium Golf Discs">Millennium Golf Discs</option>
+            <option value="Mint Discs">Mint Discs</option>
+            <option value="MVP Disc Sports">MVP</option>
+            <option value="Obsidian Discs">Obsidian Discs</option>
+            <option value="Plastic Addicts">Plastic Addicts</option>
+            <option value="Prodigy Disc">Prodigy</option>
+            <option value="Prodiscus">Prodiscus</option>
+            <option value="Streamline">Streamline</option>
+            <option value="Storm Disc Golf">Storm Disc Golf</option>
+            <option value="Skyquest Discs">Skyquest Discs</option>
+            <option value="Reptilian Disc Golf">Reptilian Disc Golf</option>
+            <option value="RPM Discs/Disc Golf Aotearoa">RPM Discs/Disc Golf Aotearoa</option>
+            <option value="TOBU Discs">TOBU Discs</option>
+            <option value="Tokyo Discs">Tokyo Discs</option>
+            <option value="Viking Discs">Viking Discs</option>
+            <option value="Westside Golf Discs">Westside</option>
+            <option value="Yikun Sports">Yikun Sports</option>
+        </select>
+        <input type="text" name="disc_name" id="disc_name" placeholder="Indtast Disc Navn">
+        <select id="type" name="type" required>
+            <option id="disabled" value="" disabled selected >Vælg Type</option>
+            <option value="Putter">Putter</option>
+            <option value="Midrange">Midrange</option>
+            <option value="Fairway">Fairway</option>
+            <option value="Distance">Distance</option>
+        </select>
+        <input id="speed" type="number" placeholder="Indtast Speed">
+        <input id="glide" type="number" placeholder="Indtast Glide">
+        <input id="turn" type="number" placeholder="Indtast Turn">
+        <input id="fade" type="number" placeholder="Indtast Fade">
+        <button onclick="makeQuery(document.getElementById('manu').value,document.getElementById('disc_name').value,document.getElementById('type').value,document.getElementById('speed').value,document.getElementById('glide').value,document.getElementById('turn').value,document.getElementById('fade').value)">Søg</button>
+
+    </div>
+
+        <p id="showData"></p>
+    </body>
+    <script>
+
+
+    async function fetchQueryData(query) {
+      var url = "http://localhost:3000/api/discs?" + query;
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'same-origin'
+            });
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function makeQueryData(query) {
+      
+      const data = await fetchQueryData(query);
+      var col = [];
+        for (var i = 0; i < data.length; i++) {
+            for (var key in data[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        var tmpth = document.createElement("th");
+        tmpth.innerHTML = "Taske"
+        tr.appendChild(tmpth);
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < data.length; i++) {
+
+            tr = table.insertRow(-1);
+            var val = "";
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = data[i][col[j]];
+                
+                if (j == 0){
+                    val = val + data[i][col[j]]
+                }
+            }
+            var tCell = tr.insertCell(-1);
+            var valInsert = "<button onclick='f1(this)' value=" + val  +">Tilføj til taske</button>"
+            tCell.innerHTML = valInsert;
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+
+    }
+
+    function makeQuery(ma, na, ty, sp, gl, tu, fa) {
+        var query = "";
+        var tmp_na = toTitleCase(na);
+        var inputList = [ma, tmp_na, ty, sp, gl, tu, fa]
+        var list = ["manufacturer=", "disc_name=", "type=", "speed=", "glide=", "turn=", "fade="];
+
+        for (i = 0; i < inputList.length; i++){
+            if (inputList[i].length > 0){
+                if(query.length < 1){
+                    query = list[i] + inputList[i];
+                }
+                else 
+                {
+                    query = query + "&" + list[i] +  inputList[i]
+                }
+            }
+        }
+
+
+
+
+            makeQueryData(query)
+    }
+
+    function f1(objButton){
+
+        let desc = prompt("Skriv plastik og farve på discen", "Plastik Farve");
+        if (desc != null || desc != "" || desc != "Plastik Farve"){
+            postData(desc, objButton.value);
+        }
+    }
+
+    function toTitleCase(str) {
+        return str.replace(
+            /\w\S*/g,
+            function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
+
+    function postData(de, ref) {
+            if (de != null && ref != null){
+
+            let url = "http://localhost:3000/api/mydiscs";
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    console.log(xhr.responseText);
+                }};
+            
+            console.log(de);
+            let data = `{
+                "Description": "${de}",
+                "Ref_id": "${ref}"
+            }`;
+            console.log(data)
+            xhr.send(data);
+
+            // location.reload();
+        }
+      }
+
+    </script>
+</html>

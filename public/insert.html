@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <script scr="../script/token.js"></script>
+        <script>
+          window.onload = token();
+        </script>
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+    <body>
+        <div id="header">
+            <a href="index.html"><img src="img/cropped-cropped-asd_Tegnebraet-1-1536x278.png"></a>
+          </div>
+            <div id="navbar"> 
+                <ul> 
+                    <li><a href="index.html">Forside</a></li> 
+                    <li><a href="insert.html">Indsæt data</a></li> 
+                    <li><a href="list.html">Se alle discs</a></li> 
+                    <li><a href="search.html">Søg i discs</a></li> 
+                    <li><a href="butik.html">Butik</a></li> 
+                    <li><a href="taske.html">Taske</a></li> 
+                    </ul> 
+            </div> 
+      
+        <div class="inputBox">
+            <h4>Manufacturers:</h4>
+            <select id="manu" name="manufacturers" required>
+                <option id="disabled" value="" disabled selected >Vælg Manufacturer</option> 
+                <option value="Axiom Discs">Axiom</option>
+                <option value="ABC Discs">ABC Discs</option>
+                <option value="Above Ground Level">Above Ground Level</option>
+                <option value="Aerobie">Aerobie</option>
+                <option value="AquaFlight Discs">AquaFlight Discs</option>
+                <option value="Arsenal Discs">Arsenal Discs</option>
+                <option value="Black Zombie Disc Golf">Black Zombie Disc Golf</option>
+                <option value="Crosslap Discgolf Parks">Crosslap Discgolf Parks</option>
+                <option value="Daredevil Discs">Daredevil Discs</option>
+                <option value="Disc Golf Association">Disc Golf Association</option>
+                <option value="Disc King">Disc King</option>
+                <option value="Discmania">Discmania</option>
+                <option value="Discraft">Discraft</option>
+                <option value="Dynamic Discs">Dynamic Discs</option>
+                <option value="Element Discs">Element Discs</option>
+                <option value="Fly High Discs">Fly High Discs</option>
+                <option value="Full Turn Discs">Full Turn Discs</option>
+                <option value="Galaxy Disc Golf">Galaxy Disc Golf</option>
+                <option value="Gateway Disc Sports">Gateway Disc Sports</option>
+                <option value="Guru Disc Golf">Guru Disc Golf</option>
+                <option value="Infinite Discs">Infinite Discs</option>
+                <option value="Innova-Champion Discs">Innova</option>
+                <option value="Kastaplast">Kastaplast</option>
+                <option value="Kestrel Outdoors">Kestrel Outdoors</option>
+                <option value="Hyzer Bomb">Hyzer Bomb</option>
+                <option value="Latitude 64">Latitude 64</option>
+                <option value="Legacy Discs">Legacy Discs</option>
+                <option value="Lightning Discs">Lightning Discs</option>
+                <option value="Løft Discs">Løft Discs</option>
+                <option value="Millennium Golf Discs">Millennium Golf Discs</option>
+                <option value="Mint Discs">Mint Discs</option>
+                <option value="MVP Disc Sports">MVP</option>
+                <option value="Obsidian Discs">Obsidian Discs</option>
+                <option value="Plastic Addicts">Plastic Addicts</option>
+                <option value="Prodigy Disc">Prodigy</option>
+                <option value="Prodiscus">Prodiscus</option>
+                <option value="Streamline">Streamline</option>
+                <option value="Storm Disc Golf">Storm Disc Golf</option>
+                <option value="Skyquest Discs">Skyquest Discs</option>
+                <option value="Reptilian Disc Golf">Reptilian Disc Golf</option>
+                <option value="RPM Discs/Disc Golf Aotearoa">RPM Discs/Disc Golf Aotearoa</option>
+                <option value="TOBU Discs">TOBU Discs</option>
+                <option value="Tokyo Discs">Tokyo Discs</option>
+                <option value="Viking Discs">Viking Discs</option>
+                <option value="Westside Golf Discs">Westside</option>
+                <option value="Yikun Sports">Yikun Sports</option>
+            </select>
+        <h4>Disc Name:</h4>
+        <input id="disc_name" type="text" onkeyup="success()" placeholder="Indsæt Disc Name">
+        <h4>Type:</h4>
+        <select id="type" name="type" onchange="success()" required>
+            <option id="disabled" value="" disabled selected >Vælg Type</option>
+            <option value="Putter">Putter</option>
+            <option value="Midrange">Midrange</option>
+            <option value="Fairway">Fairway</option>
+            <option value="Distance">Distance</option>
+        </select>
+        <h4>Speed:</h4>        
+        <input id="speed" type="number" onkeyup="success()" placeholder="Indsæt Speed">
+        <h4>Glide:</h4>
+        <input id="glide" type="number" onkeyup="success()" placeholder="Indsæt Glide">
+        <h4>Turn:</h4>
+        <input id="turn" type="number" onkeyup="success()" placeholder="Indsæt Turn">
+        <h4>Fade:</h4>
+        <input id="fade" type="number" onkeyup="success()" placeholder="Indsæt Fade">
+
+        <button id="postD" disabled onclick="postData(document.getElementById('manu').value,document.getElementById('disc_name').value,document.getElementById('type').value,document.getElementById('speed').value,document.getElementById('glide').value,document.getElementById('turn').value,document.getElementById('fade').value)">Tilføj disc</button>
+        
+    </div>
+    </body>
+    <script>
+
+        function postData(ma, na, ty, sp, gl, tu, fa) {
+            
+            console.log(ma, na, sp, gl, tu, fa);          
+
+            if (ma != null && na != null && gl != null && tu != null && fa != null){
+
+            let url = "http://localhost:3000/api/discs";
+
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+
+            xhr.setRequestHeader("Accept", "application/json");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    console.log(xhr.responseText);
+                }};
+
+            let data = `{
+                "manufacturer": "${ma}",
+                "disc_name": "${na}",
+                "type": "${ty}",
+                "speed": ${sp},
+                "glide": ${gl},
+                "turn": ${tu},
+                "fade": ${fa}
+            }`;
+            console.log(data)
+            xhr.send(data);
+
+            location.reload();
+        }
+      }
+
+      function success() {
+	 if(document.getElementById("manu").value==="" || document.getElementById("disc_name").value==="" || document.getElementById("type").value==="" || document.getElementById("speed").value==="" || document.getElementById("glide").value==="" || document.getElementById("turn").value==="" || document.getElementById("fade").value==="")   { 
+            document.getElementById('postD').disabled = true; 
+        } else { 
+            document.getElementById('postD').disabled = false;
+        }
+    }
+    </script>
+</html>
